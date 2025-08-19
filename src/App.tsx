@@ -1,7 +1,7 @@
 import './App.css'
 import LandingPageAuditor from './components/LandingPageAuditor'
 
-function App() {
+function App(): JSX.Element {
   return (
     <div>
       <LandingPageAuditor />
