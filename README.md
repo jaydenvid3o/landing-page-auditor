@@ -1,12 +1,20 @@
-# React + Vite
+# Landing Page Auditor Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive web-based tool that automatically analyzes landing pages and provides detailed audits with actionable recommendations. The frontend is built with **React**, **TypeScript**, **Tailwind CSS**, and shadcn UI components.
 
-Currently, two official plugins are available:
+## Features
+- **Landing page analysis**: scrape visible text, headlines, calls to action, forms, and meta information.
+- **Competitive analysis**: compare up to three competitor URLs and highlight strengths and gaps.
+- **Audit engine**: evaluate conversion optimization, user experience, messaging clarity, and technical SEO to generate an overall score.
+- **Report generation**: produce prioritized recommendations and benchmarking insights.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Available Scripts
+- `npm run lint` – run ESLint
+- `npm run build` – build the application for production
+- `npm run preview` – preview the production build locally

@@ -2,6 +2,7 @@
   "name": "landing-page-auditor",
   "private": true,
   "version": "0.0.0",
+  "description": "A web-based tool that analyzes landing pages and provides detailed audit reports with actionable recommendations.",
   "type": "module",
   "scripts": {
     "dev": "vite",
