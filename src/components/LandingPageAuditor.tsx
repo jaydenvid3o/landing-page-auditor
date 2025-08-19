@@ -1,18 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import { Search, CheckCircle, AlertTriangle, TrendingUp, FileText, Download, ExternalLink, Star, Target, Users, Zap } from 'lucide-react';
+import React, { useState, useEffect } from 'react'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
+import {
+  Search,
+  CheckCircle,
+  AlertTriangle,
+  TrendingUp,
+  FileText,
+  Download,
+  ExternalLink,
+  Star,
+  Target,
+  Users,
+  Zap
+} from 'lucide-react'
 
-const LandingPageAuditor = () => {
-  const [currentStep, setCurrentStep] = useState('landing');
-  const [formData, setFormData] = useState({
+interface FormData {
+  primaryUrl: string
+  companyName: string
+  industry: string
+  competitorUrls: string[]
+  campaignType: string
+  targetAudience: string
+}
+
+interface AnalysisResults {
+  overallScore: number
+  grade: string
+  scores: {
+    conversion: number
+    userExperience: number
+    contentQuality: number
+    technical: number
+  }
+  topRecommendations: string[]
+  competitorComparison: { name: string; score: number }[]
+}
+
+const LandingPageAuditor: React.FC = () => {
+  const [currentStep, setCurrentStep] = useState<'landing' | 'form' | 'analysis' | 'results'>('landing')
+  const [formData, setFormData] = useState<FormData>({
     primaryUrl: '',
     companyName: '',
     industry: '',
     competitorUrls: ['', '', ''],
     campaignType: '',
     targetAudience: ''
-  });
-  const [analysisProgress, setAnalysisProgress] = useState(0);
-  const [analysisResults, setAnalysisResults] = useState(null);
+  })
+  const [analysisProgress, setAnalysisProgress] = useState(0)
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(null)
 
   // Simulate analysis progress
   useEffect(() => {
@@ -32,7 +68,7 @@ const LandingPageAuditor = () => {
     }
   }, [currentStep]);
 
-  const generateMockResults = () => ({
+  const generateMockResults = (): AnalysisResults => ({
     overallScore: 78,
     grade: 'B+',
     scores: {
@@ -55,21 +91,21 @@ const LandingPageAuditor = () => {
     ]
   });
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
   };
 
-  const handleCompetitorChange = (index, value) => {
-    const newUrls = [...formData.competitorUrls];
-    newUrls[index] = value;
+  const handleCompetitorChange = (index: number, value: string) => {
+    const newUrls = [...formData.competitorUrls]
+    newUrls[index] = value
     setFormData(prev => ({
       ...prev,
       competitorUrls: newUrls
-    }));
-  };
+    }))
+  }
 
   const startAnalysis = () => {
     setCurrentStep('analysis');
@@ -99,13 +135,13 @@ const LandingPageAuditor = () => {
             Analyze your landing pages with AI-powered insights. Get actionable recommendations 
             and competitive analysis in under 60 seconds.
           </p>
-          <button 
+          <Button
             onClick={() => setCurrentStep('form')}
             className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl"
           >
             <Search className="w-6 h-6" />
             Start Your Free Analysis
-          </button>
+          </Button>
         </div>
 
         {/* Features Grid */}
@@ -184,12 +220,12 @@ const LandingPageAuditor = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Landing Page URL *
                   </label>
-                  <input
+                  <Input
                     type="url"
                     value={formData.primaryUrl}
                     onChange={(e) => handleInputChange('primaryUrl', e.target.value)}
                     placeholder="https://example.com/landing-page"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full"
                     required
                   />
                 </div>
@@ -198,12 +234,12 @@ const LandingPageAuditor = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Company/Campaign Name *
                   </label>
-                  <input
+                  <Input
                     type="text"
                     value={formData.companyName}
                     onChange={(e) => handleInputChange('companyName', e.target.value)}
                     placeholder="Acme Corp"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full"
                     required
                   />
                 </div>
@@ -245,12 +281,12 @@ const LandingPageAuditor = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Competitor {index + 1} URL
                   </label>
-                  <input
+                  <Input
                     type="url"
                     value={url}
                     onChange={(e) => handleCompetitorChange(index, e.target.value)}
                     placeholder="https://competitor.com/landing-page"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full"
                   />
                 </div>
               ))}
@@ -286,12 +322,12 @@ const LandingPageAuditor = () => {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Target Audience
                   </label>
-                  <input
+                  <Input
                     type="text"
                     value={formData.targetAudience}
                     onChange={(e) => handleInputChange('targetAudience', e.target.value)}
                     placeholder="Small business owners, age 30-50"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full"
                   />
                 </div>
               </div>
@@ -299,13 +335,13 @@ const LandingPageAuditor = () => {
 
             {/* Submit Button */}
             <div className="text-center">
-              <button
+              <Button
                 onClick={startAnalysis}
                 className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-3 mx-auto"
               >
                 <Search className="w-6 h-6" />
                 Start Analysis
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -359,9 +395,11 @@ const LandingPageAuditor = () => {
     </div>
   );
 
-  const renderResults = () => (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4">
+  const renderResults = () => {
+    if (!analysisResults) return null
+    return (
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Landing Page Audit Results</h1>
@@ -427,21 +465,21 @@ const LandingPageAuditor = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 justify-center">
-            <button className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
+            <Button className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
               <Download className="w-5 h-5" />
               Download Full Report
-            </button>
-            <button className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
+            </Button>
+            <Button className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
               <FileText className="w-5 h-5" />
               View Detailed Analysis
-            </button>
-            <button 
+            </Button>
+            <Button
               onClick={() => {setCurrentStep('form'); setAnalysisProgress(0); setAnalysisResults(null);}}
               className="flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
             >
               <Search className="w-5 h-5" />
               Analyze Another Page
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -491,7 +529,8 @@ const LandingPageAuditor = () => {
         </div>
       </div>
     </div>
-  );
+  )
+  }
 
   return (
     <div className="font-sans">
